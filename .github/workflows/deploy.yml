@@ -33,7 +33,7 @@ jobs:
             fi
 
             echo "Populating .env file..."
-            echo "${{ secrets.ENV }}" > .env
+            echo "${{ secrets.ENV }}" > "$TARGET_DIR"/.env
 
             echo "Environment file written to .env"
 
