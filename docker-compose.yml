@@ -14,8 +14,8 @@ services:
       - search
     ports:
       - "${PORTS_GATEWAY:-8878}:8080"
-    expose:
-      - "8080"
+    networks:
+      - tp-net
     environment:
       VIRTUAL_HOST: "${VIRTUAL_HOST:-}"
       VIRTUAL_PORT: "8080"
@@ -185,3 +185,9 @@ volumes:
   files:
   storage_api_data:
   gateway_redis_data:
+
+
+networks:
+  tp-net:
+    external: true
+    name: ${DOCKER_NETWORK}
