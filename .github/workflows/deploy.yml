@@ -12,13 +12,10 @@ jobs:
     steps:
       - name: Trigger remote Git checkout and deploy
         uses: appleboy/ssh-action@v1
-        env:
-          REMOTE_ENV_FILE: ${{ secrets.ENV }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          envs: REMOTE_ENV_FILE
           script: |
             set -e
 
@@ -36,7 +33,9 @@ jobs:
             fi
 
             echo "Populating .env file..."
-            printf '%s\n' "$REMOTE_ENV_FILE" > "$TARGET_DIR/.env"
+            cat > "$TARGET_DIR/.env" << 'EOF_ENV'
+            ${{ secrets.ENV }}
+            EOF_ENV
 
             echo "Environment file written to .env"
 
