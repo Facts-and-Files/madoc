@@ -33,7 +33,9 @@ jobs:
             fi
 
             echo "Populating .env file..."
-            echo "${{ secrets.ENV }}" > "$TARGET_DIR"/.env
+            cat > "$TARGET_DIR/.env" << 'EOF_ENV'
+            ${{ secrets.ENV }}
+            EOF_ENV
 
             echo "Environment file written to .env"
 
